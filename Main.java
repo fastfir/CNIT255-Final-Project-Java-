@@ -1,4 +1,3 @@
-
 public class Main {
 
     private static void PrintAll(GameRepository gameRepository) {
@@ -12,26 +11,25 @@ public class Main {
         }
     }
 
-
-
     public static void main(String[] args) {
         GameRepository gameRepository = new InMemoryGameRepository();
 
-        Game game1 = new Game(1, "The Legend of Zelda: Breath of the Wild", "Nintendo", 59.99, false);
+        Game game1 = new Game("The Legend of Zelda: Breath of the Wild", "Nintendo", 59.99, false);
         gameRepository.save(game1);
 
-        Game game2 = new Game(2, "Super Mario Odyssey", "Nintendo", 49.99, false);
+        Game game2 = new Game("Super Mario Odyssey", "Nintendo", 49.99, false);
         gameRepository.save(game2);
 
-        Game game3 = new Game(3, "Minecraft", "Mojang", 29.99, true);
+        Game game3 = new Game("Minecraft", "Mojang", 29.99, true);
         gameRepository.save(game3);
 
-        Game game4 = new Game(4, "The Witcher 3: Wild Hunt", "CD Projekt", 39.99, false);
+        Game game4 = new Game("The Witcher 3: Wild Hunt", "CD Projekt", 39.99, false);
         gameRepository.save(game4);
 
-        Game game5 = new Game(5, "Cyberpunk 2077", "CD Projekt", 59.99, true);
+        Game game5 = new Game("Cyberpunk 2077", "CD Projekt", 59.99, true);
         gameRepository.save(game5);
 
+        System.out.println("---------------------------");
         PrintAll(gameRepository);
     }
 }
