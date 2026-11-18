@@ -1,3 +1,4 @@
+
 public class Game {
     private int id;
     private String title;
@@ -92,6 +93,22 @@ public class Game {
                 ", price=" + price +
                 ", isExpansion=" + isExpansion +
                 '}';
+    }
+
+    @Override 
+    public boolean equals(Game game) {
+        if (game == null) throw new NullPointerException("Cannot compare to null.");
+        return this.id == game.id &&
+                Double.compare(game.price, this.price) == 0 &&
+                this.isExpansion == game.isExpansion &&
+                this.title.equals(game.title) &&
+                this.publisher.equals(game.publisher);
+    }
+
+    @Override 
+    public int compareTo(Game game) {
+        if (game == null) throw new NullPointerExceptionException("Cannot compare to null.");
+        return Integer.compare(this.id, game.id);
     }
 
 }

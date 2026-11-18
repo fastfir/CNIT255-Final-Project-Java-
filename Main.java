@@ -1,3 +1,4 @@
+
 public class Main {
 
     private static void PrintAll(GameRepository gameRepository) {
@@ -24,6 +25,12 @@ public class Main {
 
         Game game3 = new Game(3, "Minecraft", "Mojang", 29.99, true);
         gameRepository.save(game3);
+
+        Game game4 = new Game(4, "The Witcher 3: Wild Hunt", "CD Projekt", 39.99, false);
+        gameRepository.save(game4);
+
+        Game game5 = new Game(5, "Cyberpunk 2077", "CD Projekt", 59.99, true);
+        gameRepository.save(game5);
 
         PrintAll(gameRepository);
     }
