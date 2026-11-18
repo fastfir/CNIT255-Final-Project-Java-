@@ -22,7 +22,6 @@ public class InMemoryGameRepository implements GameRepository {
             throw new IllegalArgumentException("Game with id " + game.getId() + " does not exist.");
         }
     }
-
     @Override
     public Game findById(int id) {
         int index = indexOf(id);
@@ -41,7 +40,6 @@ public class InMemoryGameRepository implements GameRepository {
             throw new IllegalArgumentException("Game with id " + id + " does not exist.");
         }
     }
-    
     public List<Game> findAll() {
         return new ArrayList<>(games);
     }
