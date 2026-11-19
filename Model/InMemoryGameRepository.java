@@ -1,22 +1,24 @@
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class InMemoryGameRepository implements GameRepository {
     private final List<Game> games = new ArrayList<>();
     private int nextId = 1;
 
-    @Override
     private int indexOf(int id) {
         for (int i = 0; i < games.size(); i++) {
-            if (games.get(i).getId().equals(String.valueOf(id))) {
+            if (games.get(i).getId() == id) {
                 return i;
             }
         }
         return -1;
     }
-    @Override
+
+    @Override 
     public void save(Game game) {
         if (game.getId() == 0) {
-            game.setId(String.valueOf(nextId++));
+            game.setId(nextId++);
+            games.add(game);
         } else if (indexOf(game.getId()) != -1) {
             games.set(indexOf(game.getId()), game);
         }
@@ -24,6 +26,7 @@ public class InMemoryGameRepository implements GameRepository {
             throw new IllegalArgumentException("Game with id " + game.getId() + " does not exist.");
         }
     }
+
     @Override
     public Game findById(int id) {
         int index = indexOf(id);
@@ -32,7 +35,8 @@ public class InMemoryGameRepository implements GameRepository {
         }
         return null;
     }
-    @Override 
+    
+    @Override
     public void deleteById(int id) {
         int index = indexOf(id);
         if (index != -1) {
@@ -42,6 +46,8 @@ public class InMemoryGameRepository implements GameRepository {
             throw new IllegalArgumentException("Game with id " + id + " does not exist.");
         }
     }
+
+    @Override
     public List<Game> findAll() {
         return new ArrayList<>(games);
     }

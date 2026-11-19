@@ -1,4 +1,3 @@
-
 public class Game {
     private int id;
     private String title;
@@ -6,8 +5,8 @@ public class Game {
     private double price;
     private boolean isExpansion;
 
-    public Game(int id, String title, String publisher, double price, boolean isExpansion) {
-        this.id = id;
+    public Game(String title, String publisher, double price, boolean isExpansion) {
+        this.id = 0;
         this.title = title;
         this.publisher = publisher;
         this.price = price;
@@ -27,10 +26,10 @@ public class Game {
     }
 
     public void setId(int id) {
-        if (id instanceof Integer) {
+        if (id > 0) {
             this.id = id;
         } else {
-            throw new IllegalArgumentException("ID must be an integer.");
+            throw new IllegalArgumentException("ID must be a positive integer.");
         }
     }
 
@@ -39,7 +38,7 @@ public class Game {
     }
 
     public void setTitle(String title) {
-        if (title instanceof String) {
+        if (title != null) {
             this.title = title;
         } else {
             throw new IllegalArgumentException("Title must be a string.");
@@ -51,7 +50,7 @@ public class Game {
     }
 
     public void setPublisher(String publisher) {
-        if (publisher instanceof String) {
+        if (publisher != null) {
             this.publisher = publisher;
         } else {
             throw new IllegalArgumentException("Publisher must be a string.");
@@ -65,8 +64,6 @@ public class Game {
     public void setPrice(double price) {
         if (price >= 0) {
             this.price = price;
-        } else if (!(price instanceof Double)) {
-            throw new IllegalArgumentException("Price must be a number.");
         } else {
             throw new IllegalArgumentException("Price must be a non-negative number.");
         }
@@ -77,11 +74,7 @@ public class Game {
     }
 
     public void setExpansion(boolean expansion) {
-        if (expansion instanceof Boolean) {
-            this.isExpansion = expansion;
-        } else {
-            throw new IllegalArgumentException("isExpansion must be a boolean.");
-        }
+        this.isExpansion = expansion;
     }
 
     @Override
@@ -94,8 +87,7 @@ public class Game {
                 ", isExpansion=" + isExpansion +
                 '}';
     }
-
-    @Override 
+ 
     public boolean equals(Game game) {
         if (game == null) throw new NullPointerException("Cannot compare to null.");
         return this.id == game.id &&
@@ -104,10 +96,9 @@ public class Game {
                 this.title.equals(game.title) &&
                 this.publisher.equals(game.publisher);
     }
-
-    @Override 
+ 
     public int compareTo(Game game) {
-        if (game == null) throw new NullPointerExceptionException("Cannot compare to null.");
+        if (game == null) throw new NullPointerException("Cannot compare to null.");
         return Integer.compare(this.id, game.id);
     }
 
