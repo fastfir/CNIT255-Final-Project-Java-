@@ -1,13 +1,13 @@
 package boardGameLibrary.model;
 import java.util.List;
 
-public interface GameRepository {
+public interface ItemRepository {
     
-    void save(Game game);
+    void save(Item item);
 
-    Game findById(int id);
+    Item findById(int id);
 
     void deleteById(int id);
 
-    List<Game> findAll();
+    List<Item> findAll();
 }

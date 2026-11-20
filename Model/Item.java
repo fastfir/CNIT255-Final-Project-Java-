@@ -1,13 +1,13 @@
 package boardGameLibrary.model;
 
-public class Game {
+public class Item {
     private int id;
     private String title;
     private String publisher;
     private double price;
     private boolean isExpansion;
 
-    public Game(String title, String publisher, double price, boolean isExpansion) {
+    public Item(String title, String publisher, double price, boolean isExpansion) {
         this.id = 0;
         this.setTitle(title);
         this.setPublisher(publisher);
@@ -15,7 +15,7 @@ public class Game {
         this.setExpansion(isExpansion);
     }
     
-    public Game() {
+    public Item() {
         this.id = 0;
         this.setTitle("");
         this.setPublisher("");
@@ -81,7 +81,7 @@ public class Game {
 
     @Override
     public String toString() {
-        return "Game{" +
+        return "Item{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", publisher='" + publisher + '\'' +

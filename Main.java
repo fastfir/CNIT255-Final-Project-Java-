@@ -1,43 +1,43 @@
 package boardGameLibrary;
-import boardGameLibrary.model.Game;
-import boardGameLibrary.model.GameRepository;
-import boardGameLibrary.model.InMemoryGameRepository;
+import boardGameLibrary.model.Item;
+import boardGameLibrary.model.ItemRepository;
+import boardGameLibrary.model.InMemoryItemRepository;
 import java.util.List;
 public class Main {
 
     private static void section(String name) {
         System.out.println("\n=== " + name + " ===");
     }
-    private static void printAll(GameRepository gameRepository) {
-        for (Game game : gameRepository.findAll()) {
-            System.out.println("Game ID: " + game.getId());
-            System.out.println("Game Title: " + game.getTitle());
-            System.out.println("Game Publisher: " + game.getPublisher());
-            System.out.println("Game Price: $" + game.getPrice());
-            System.out.println("Is Expansion: " + (game.isExpansion() ? "Yes" : "No"));
+    private static void printAll(ItemRepository itemRepository) {
+        for (Item item : itemRepository.findAll()) {
+            System.out.println("Item ID: " + item.getId());
+            System.out.println("Item Title: " + item.getTitle());
+            System.out.println("Item Publisher: " + item.getPublisher());
+            System.out.println("Item Price: $" + item.getPrice());
+            System.out.println("Is Expansion: " + (item.isExpansion() ? "Yes" : "No"));
             System.out.println("---------------------------");
         }
     }
 
     public static void main(String[] args) {
-        GameRepository repo = new InMemoryGameRepository();
-        Game[] seed = {
-            new Game("Catan", "Catan Studio", 44.99, false),
-            new Game("Catan: Seafarers", "Catan Studio", 34.99, true),
-            new Game("Ticket to Ride", "Days of Wonder", 54.99, false),
-            new Game("Pandemic", "Z-Man Games", 39.99, false),
-            new Game("Carcassonne", "Z-Man Games", 29.99, false),
-            new Game("Carcassonne: Inns & Cathedrals", "Z-Man Games", 19.99, true),
-            new Game("Azul", "Plan B Games", 39.99, false),
-            new Game("Wingspan", "Stonemaier Games", 65.00, false),
-            new Game("Wingspan: European Expansion", "Stonemaier Games", 29.99, true),
-            new Game("Codenames", "Czech Games Edition", 19.99, false)
+        ItemRepository repo = new InMemoryItemRepository();
+        Item[] seed = {
+            new Item("Catan", "Catan Studio", 44.99, false),
+            new Item("Catan: Seafarers", "Catan Studio", 34.99, true),
+            new Item("Ticket to Ride", "Days of Wonder", 54.99, false),
+            new Item("Pandemic", "Z-Man Games", 39.99, false),
+            new Item("Carcassonne", "Z-Man Games", 29.99, false),
+            new Item("Carcassonne: Inns & Cathedrals", "Z-Man Games", 19.99, true),
+            new Item("Azul", "Plan B Games", 39.99, false),
+            new Item("Wingspan", "Stonemaier Games", 65.00, false),
+            new Item("Wingspan: European Expansion", "Stonemaier Games", 29.99, true),
+            new Item("Codenames", "Czech Games Edition", 19.99, false)
         };
 
         section("CREATE");
-        for (Game game : seed) {
-            repo.save(game);
-            System.out.println("Saved with id " + game.getId() + ": " + game.getTitle());
+        for (Item item : seed) {
+            repo.save(item);
+            System.out.println("Saved with id " + item.getId() + ": " + item.getTitle());
         }
 
         section("READ");
@@ -46,12 +46,12 @@ public class Main {
         System.out.println("findById(999): " + repo.findById(999));
 
         section("UPDATE");
-        Game toUpdate = repo.findById(2);
+        Item toUpdate = repo.findById(2);
         toUpdate.setPrice(29.99);
         toUpdate.setPublisher("Kosmos");
         repo.save(toUpdate);
         printAll(repo);
-        Game ghost = new Game("Ghost", "None", 1.00, false);
+        Item ghost = new Item("Ghost", "None", 1.00, false);
         ghost.setId(999);
         try {
             repo.save(ghost);
@@ -70,7 +70,7 @@ public class Main {
 
         section("BAD INPUT");
         try {
-            new Game("Broken", "Nobody", -10.0, false);
+            new Item("Broken", "Nobody", -10.0, false);
         } catch (IllegalArgumentException e) {
             System.out.println("Rejected: " + e.getMessage());
         }
@@ -82,7 +82,7 @@ public class Main {
         System.out.println("Price of id 2 is still $" + repo.findById(2).getPrice());
 
         section("DEFENSIVE COPY");
-        List<Game> copy = repo.findAll();
+        List<Item> copy = repo.findAll();
         int before = copy.size();
         copy.clear();
         System.out.println("Cleared the copy (" + before + " items). Repository still has "
