@@ -1,3 +1,5 @@
+package boardGameLibrary.model;
+
 public class Game {
     private int id;
     private String title;
@@ -7,18 +9,18 @@ public class Game {
 
     public Game(String title, String publisher, double price, boolean isExpansion) {
         this.id = 0;
-        this.title = title;
-        this.publisher = publisher;
-        this.price = price;
-        this.isExpansion = isExpansion;
+        this.setTitle(title);
+        this.setPublisher(publisher);
+        this.setPrice(price);
+        this.setExpansion(isExpansion);
     }
     
     public Game() {
         this.id = 0;
-        this.title = "";
-        this.publisher = "";
-        this.price = 0.0;
-        this.isExpansion = false;
+        this.setTitle("");
+        this.setPublisher("");
+        this.setPrice(0.0);
+        this.setExpansion(false);
     }
 
     public int getId() {
@@ -87,19 +89,4 @@ public class Game {
                 ", isExpansion=" + isExpansion +
                 '}';
     }
- 
-    public boolean equals(Game game) {
-        if (game == null) throw new NullPointerException("Cannot compare to null.");
-        return this.id == game.id &&
-                Double.compare(game.price, this.price) == 0 &&
-                this.isExpansion == game.isExpansion &&
-                this.title.equals(game.title) &&
-                this.publisher.equals(game.publisher);
-    }
- 
-    public int compareTo(Game game) {
-        if (game == null) throw new NullPointerException("Cannot compare to null.");
-        return Integer.compare(this.id, game.id);
-    }
-
 }

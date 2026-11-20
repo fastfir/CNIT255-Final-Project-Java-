@@ -1,6 +1,14 @@
+package boardGameLibrary;
+import boardGameLibrary.model.Game;
+import boardGameLibrary.model.GameRepository;
+import boardGameLibrary.model.InMemoryGameRepository;
+import java.util.List;
 public class Main {
 
-    private static void PrintAll(GameRepository gameRepository) {
+    private static void section(String name) {
+        System.out.println("\n=== " + name + " ===");
+    }
+    private static void printAll(GameRepository gameRepository) {
         for (Game game : gameRepository.findAll()) {
             System.out.println("Game ID: " + game.getId());
             System.out.println("Game Title: " + game.getTitle());
@@ -12,24 +20,72 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        GameRepository gameRepository = new InMemoryGameRepository();
+        GameRepository repo = new InMemoryGameRepository();
+        Game[] seed = {
+            new Game("Catan", "Catan Studio", 44.99, false),
+            new Game("Catan: Seafarers", "Catan Studio", 34.99, true),
+            new Game("Ticket to Ride", "Days of Wonder", 54.99, false),
+            new Game("Pandemic", "Z-Man Games", 39.99, false),
+            new Game("Carcassonne", "Z-Man Games", 29.99, false),
+            new Game("Carcassonne: Inns & Cathedrals", "Z-Man Games", 19.99, true),
+            new Game("Azul", "Plan B Games", 39.99, false),
+            new Game("Wingspan", "Stonemaier Games", 65.00, false),
+            new Game("Wingspan: European Expansion", "Stonemaier Games", 29.99, true),
+            new Game("Codenames", "Czech Games Edition", 19.99, false)
+        };
 
-        Game game1 = new Game("The Legend of Zelda: Breath of the Wild", "Nintendo", 59.99, false);
-        gameRepository.save(game1);
+        section("CREATE");
+        for (Game game : seed) {
+            repo.save(game);
+            System.out.println("Saved with id " + game.getId() + ": " + game.getTitle());
+        }
 
-        Game game2 = new Game("Super Mario Odyssey", "Nintendo", 49.99, false);
-        gameRepository.save(game2);
+        section("READ");
+        printAll(repo);
+        System.out.println("findById(3): " + repo.findById(3));
+        System.out.println("findById(999): " + repo.findById(999));
 
-        Game game3 = new Game("Minecraft", "Mojang", 29.99, true);
-        gameRepository.save(game3);
+        section("UPDATE");
+        Game toUpdate = repo.findById(2);
+        toUpdate.setPrice(29.99);
+        toUpdate.setPublisher("Kosmos");
+        repo.save(toUpdate);
+        printAll(repo);
+        Game ghost = new Game("Ghost", "None", 1.00, false);
+        ghost.setId(999);
+        try {
+            repo.save(ghost);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Update rejected: " + e.getMessage());
+        }
 
-        Game game4 = new Game("The Witcher 3: Wild Hunt", "CD Projekt", 39.99, false);
-        gameRepository.save(game4);
+        section("DELETE");
+        repo.deleteById(4);
+        printAll(repo);
+        try {
+            repo.deleteById(4);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Delete rejected: " + e.getMessage());
+        }
 
-        Game game5 = new Game("Cyberpunk 2077", "CD Projekt", 59.99, true);
-        gameRepository.save(game5);
+        section("BAD INPUT");
+        try {
+            new Game("Broken", "Nobody", -10.0, false);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Rejected: " + e.getMessage());
+        }
+        try {
+            repo.findById(2).setPrice(-1.0);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Rejected: " + e.getMessage());
+        }
+        System.out.println("Price of id 2 is still $" + repo.findById(2).getPrice());
 
-        System.out.println("---------------------------");
-        PrintAll(gameRepository);
+        section("DEFENSIVE COPY");
+        List<Game> copy = repo.findAll();
+        int before = copy.size();
+        copy.clear();
+        System.out.println("Cleared the copy (" + before + " items). Repository still has "
+                + repo.findAll().size());
     }
 }

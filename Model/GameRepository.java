@@ -1,3 +1,4 @@
+package boardGameLibrary.model;
 import java.util.List;
 
 public interface GameRepository {

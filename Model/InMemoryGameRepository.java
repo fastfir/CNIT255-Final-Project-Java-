@@ -1,3 +1,4 @@
+package boardGameLibrary.model;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +17,12 @@ public class InMemoryGameRepository implements GameRepository {
 
     @Override 
     public void save(Game game) {
+        int index = indexOf(game.getId());
         if (game.getId() == 0) {
             game.setId(nextId++);
             games.add(game);
-        } else if (indexOf(game.getId()) != -1) {
-            games.set(indexOf(game.getId()), game);
+        } else if (index != -1) {
+            games.set(index, game);
         }
         else {
             throw new IllegalArgumentException("Game with id " + game.getId() + " does not exist.");
@@ -41,8 +43,7 @@ public class InMemoryGameRepository implements GameRepository {
         int index = indexOf(id);
         if (index != -1) {
             games.remove(index);
-        }
-        else if (index == -1) {
+        } else {
             throw new IllegalArgumentException("Game with id " + id + " does not exist.");
         }
     }
